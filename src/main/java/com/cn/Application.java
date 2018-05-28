@@ -1,5 +1,4 @@
 package com.cn;
-
 import de.codecentric.boot.admin.server.config.EnableAdminServer;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
@@ -23,7 +22,17 @@ import java.util.concurrent.Executors;
 @EnableAdminServer
 @EnableSwagger2
 @MapperScan("com.cn.domain.mapper")
-public class Application {
+public class Application   implements SchedulingConfigurer {
+    @Bean(destroyMethod = "shutdown")
+    public Executor taskExecutor() {
+        return Executors.newScheduledThreadPool(Runtime.getRuntime().availableProcessors());
+    }
+
+    @Override
+    public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {
+        taskRegistrar.setScheduler(taskExecutor());
+    }
+
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
     }

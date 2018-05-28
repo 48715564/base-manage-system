@@ -2,6 +2,7 @@ package com.cn.common.security.controller;
 
 import com.cn.common.security.JwtTokenUtil;
 import com.cn.common.security.JwtUser;
+import com.cn.domain.entity.SysUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,11 +21,11 @@ public class UserRestController {
     private UserDetailsService userDetailsService;
 
     @RequestMapping(value = "user", method = RequestMethod.GET)
-    public JwtUser getAuthenticatedUser(HttpServletRequest request) {
-        String token = request.getHeader("Authorization").substring(7);
+    public SysUser getAuthenticatedUser(HttpServletRequest request) {
+        String token = request.getHeader("token");
         String username = jwtTokenUtil.getUsernameFromToken(token);
-        JwtUser user = (JwtUser) userDetailsService.loadUserByUsername(username);
-        return user;
+        JwtUser jwtUser = (JwtUser) userDetailsService.loadUserByUsername(username);
+        return jwtUser.getSysUser();
     }
 
 }

@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by bozhou on 2017/11/20.
  */
-public interface CrudWithBLOBsMapper<Example,Entity> extends CrudMapper<Example,Entity> {
+public interface CrudWithBLOBsMapper<Example,Entity,T> extends CrudMapper<Example,Entity,T> {
     List<Entity> selectByExampleWithBLOBs(Example example);
     int updateByExampleWithBLOBs(@Param("record") Entity record, @Param("example") Example example);
     int updateByPrimaryKeyWithBLOBs(Entity record);

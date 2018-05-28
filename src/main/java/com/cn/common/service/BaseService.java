@@ -27,4 +27,10 @@ public class BaseService<T> {
         ajaxResponse.setResult(pageInfo);
         return ajaxResponse;
     }
+
+    public AjaxResponse<String> getMsgAjaxResponse(String msg){
+        AjaxResponse<String> ajaxResponse = new AjaxResponse();
+        ajaxResponse.setResult(msg);
+        return ajaxResponse;
+    }
 }

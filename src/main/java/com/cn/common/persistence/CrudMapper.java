@@ -6,12 +6,12 @@ import java.util.List;
 /**
  * Created by bozhou on 2017/11/20.
  */
-public interface CrudMapper<Example,Entity>{
+public interface CrudMapper<Example,Entity,T>{
     int countByExample(Example example);
 
     int deleteByExample(Example example);
 
-    int deleteByPrimaryKey(String id);
+    int deleteByPrimaryKey(T id);
 
     int insert(Entity record);
 
@@ -19,7 +19,7 @@ public interface CrudMapper<Example,Entity>{
 
     List<Entity> selectByExample(Example example);
 
-    Entity selectByPrimaryKey(String id);
+    Entity selectByPrimaryKey(T id);
 
     int updateByExampleSelective(@Param("record") Entity record, @Param("example") Example example);
 

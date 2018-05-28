@@ -16,7 +16,7 @@ import java.util.List;
  * Service基类,数据库表中包含clob，blob时使用
  */
 @Transactional(readOnly = true)
-public abstract class CrudWithBlobsService<D extends CrudWithBLOBsMapper<Example,Entity>, Entity extends BaseEntity,Example> extends CrudService<D,Entity,Example>{
+public abstract class CrudWithBlobsService<D extends CrudWithBLOBsMapper<Example,Entity,T>, Entity extends BaseEntity,Example,T> extends CrudService<D,Entity,Example,T>{
 
 	
 	/**

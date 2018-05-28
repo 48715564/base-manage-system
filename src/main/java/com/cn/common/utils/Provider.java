@@ -29,4 +29,12 @@ public class Provider implements Serializable {
     public ObjectMapper getObjectMapper() {
         return objectMapper;
     }
+
+    public boolean isAdmin(String userId){
+        if("0".equals(userId)){
+            return true;
+        }else {
+            return false;
+        }
+    }
 }

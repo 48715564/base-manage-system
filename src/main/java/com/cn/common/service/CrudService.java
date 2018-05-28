@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * Service基类
  */
-public abstract class CrudService<D extends CrudMapper<Example,Entity>, Entity extends BaseEntity,Example> extends BaseService<Entity> {
+public abstract class CrudService<D extends CrudMapper<Example,Entity,T>, Entity extends BaseEntity,Example,T> extends BaseService<Entity> {
 
 	/**
 	 * 持久层对象
@@ -30,7 +30,7 @@ public abstract class CrudService<D extends CrudMapper<Example,Entity>, Entity e
 	 * @param id
 	 * @return
 	 */
-	public AjaxResponse<Entity> get(String id) {
+	public AjaxResponse<Entity> getByPK(T id) {
 		return getAjaxResponse(dao.selectByPrimaryKey(id));
 	}
 
@@ -73,7 +73,7 @@ public abstract class CrudService<D extends CrudMapper<Example,Entity>, Entity e
 	 * @param entity
 	 */
 	@Transactional
-	public void save(Entity entity) {
+	public AjaxResponse<Entity> save(Entity entity) {
 		if (entity.getIsNewRecord()){
 			entity.preInsert();
 			dao.insertSelective(entity);
@@ -81,33 +81,37 @@ public abstract class CrudService<D extends CrudMapper<Example,Entity>, Entity e
 			entity.preUpdate();
 			dao.updateByPrimaryKeySelective(entity);
 		}
+		return getAjaxResponse(entity);
 	}
 
 	/**
 	 * 根据条件更新数据
-	 * @param entity
-	 */
+     * @param entity
+     */
 	@Transactional
-	public void updateByExample(Entity entity,Example example) {
+	public AjaxResponse<String> updateByExample(Entity entity, Example example) {
 			dao.updateByExample(entity,example);
+            return getMsgAjaxResponse("更新成功！");
 	}
 
 	/**
 	 * 根据条件更新值不为空的数据
-	 * @param entity
-	 */
+     * @param entity
+     */
 	@Transactional
-	public void updateByExampleSelective(Entity entity,Example example) {
+	public AjaxResponse<String> updateByExampleSelective(Entity entity, Example example) {
 		dao.updateByExampleSelective(entity,example);
+        return getMsgAjaxResponse("更新成功！");
 	}
 
 	/**
 	 * 保存数据（插入或更新）
-	 * @param entity
-	 */
+     * @param entity
+     */
 	@Transactional
-	public void updateByPrimaryKey(Entity entity) {
+	public AjaxResponse<String> updateByPrimaryKey(Entity entity) {
 		dao.updateByPrimaryKey(entity);
+        return getMsgAjaxResponse("更新成功！");
 	}
 
 	/**
@@ -115,8 +119,9 @@ public abstract class CrudService<D extends CrudMapper<Example,Entity>, Entity e
 	 * @param id
 	 */
 	@Transactional
-	public void delete(String id) {
+	public AjaxResponse<String> delete(T id) {
 		dao.deleteByPrimaryKey(id);
+        return getMsgAjaxResponse("删除成功！");
 	}
 
 
@@ -125,10 +130,11 @@ public abstract class CrudService<D extends CrudMapper<Example,Entity>, Entity e
 	 * @param ids
 	 */
 	@Transactional
-	public void deleteAll(Collection<String> ids) {
-		for (String id : ids) {
+	public AjaxResponse<String> deleteAll(Collection<T> ids) {
+		for (T id : ids) {
 			dao.deleteByPrimaryKey(id);
 		}
+        return getMsgAjaxResponse("删除成功！");
 	}
 
 }

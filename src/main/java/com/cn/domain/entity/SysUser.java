@@ -26,6 +26,8 @@ public class SysUser extends BaseEntity {
 
     private List<SysRole> roleList;
 
+    private List<SysMenu> menuList;
+
     public String getUsername() {
         return username;
     }
@@ -104,5 +106,13 @@ public class SysUser extends BaseEntity {
 
     public void setRoleList(List<SysRole> roleList) {
         this.roleList = roleList;
+    }
+
+    public List<SysMenu> getMenuList() {
+        return menuList;
+    }
+
+    public void setMenuList(List<SysMenu> menuList) {
+        this.menuList = menuList;
     }
 }
