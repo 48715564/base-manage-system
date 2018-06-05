@@ -23,17 +23,17 @@ public class JwtUserDetailsServiceImpl implements UserDetailsService {
     private UserService userService;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username) throws ResponseException {
         if (StringUtils.isNotBlank(username)) {
             //根据username查询用户信息
             SysUser sysUser = userService.getUserByUserName(username);
             if(sysUser!=null) {
                 return JwtUserFactory.create(sysUser);
             }else{
-                throw new ResponseException(String.format("未找到用户'%s'.", username), HttpStatus.UNPROCESSABLE_ENTITY);
+                throw new ResponseException(String.format("未找到用户'%s'.", username), HttpStatus.BAD_REQUEST);
             }
         } else {
-            throw new ResponseException(String.format("未找到用户'%s'.", username), HttpStatus.UNPROCESSABLE_ENTITY);
+            throw new ResponseException(String.format("未找到用户'%s'.", username), HttpStatus.BAD_REQUEST);
         }
 
     }

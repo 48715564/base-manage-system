@@ -62,7 +62,7 @@ public class AuthenticationRestController {
             // Return the token
             return new AjaxResponse<>(new JwtAuthenticationResponse(token));
         }catch (Exception e){
-            throw new ResponseException("用户名或者密码错误！", HttpStatus.UNAUTHORIZED);
+            throw new ResponseException("用户名或者密码错误！", HttpStatus.BAD_REQUEST);
         }
     }
 

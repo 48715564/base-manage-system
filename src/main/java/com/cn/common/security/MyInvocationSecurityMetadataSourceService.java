@@ -55,6 +55,8 @@ public class MyInvocationSecurityMetadataSourceService  implements
                 return map.get(resUrl);
             }
         }
+//        Collection<ConfigAttribute> nouse = new ArrayList<ConfigAttribute>();
+//        nouse.add(new SecurityConfig("无相应权限"));
         return null;
     }
 

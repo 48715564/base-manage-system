@@ -1,5 +1,7 @@
 package com.cn.common.config;
 
+import com.cn.common.security.MyFilterSecurityInterceptor;
+import com.cn.common.security.MyInvocationSecurityMetadataSourceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -16,6 +18,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import com.cn.common.security.JwtAuthenticationEntryPoint;
 import com.cn.common.security.JwtAuthenticationTokenFilter;
+import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import java.util.List;
@@ -34,6 +37,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private UserDetailsService userDetailsService;
+
+    @Autowired
+    private MyFilterSecurityInterceptor myFilterSecurityInterceptor;
 
     @Autowired
     public void configureAuthentication(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
@@ -78,6 +84,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .headers().frameOptions().disable();
         // Custom JWT based security filter
         httpSecurity.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
+        httpSecurity.addFilterAt(myFilterSecurityInterceptor,FilterSecurityInterceptor.class);
         // disable page caching
         httpSecurity.headers().cacheControl();
     }

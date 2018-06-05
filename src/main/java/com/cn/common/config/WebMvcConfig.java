@@ -2,7 +2,9 @@ package com.cn.common.config;
 
 import com.cn.common.infrastructure.AuthResolver;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.mobile.device.DeviceHandlerMethodArgumentResolver;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -18,6 +20,12 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
         argumentResolvers.add(authResolver);
+        argumentResolvers.add(deviceHandlerMethodArgumentResolver());
+    }
+
+    @Bean
+    public DeviceHandlerMethodArgumentResolver deviceHandlerMethodArgumentResolver() {
+        return new DeviceHandlerMethodArgumentResolver();
     }
 
     @Override

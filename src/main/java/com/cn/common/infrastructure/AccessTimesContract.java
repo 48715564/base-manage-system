@@ -1,6 +1,7 @@
 package com.cn.common.infrastructure;
 
 import com.cn.common.utils.CommUtil;
+import com.cn.common.utils.StringUtils;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.IMap;
 import org.apache.commons.logging.Log;
@@ -47,5 +48,18 @@ public class AccessTimesContract {
         }
     }
 
+    public static String byteToBit(byte b) {
+        return ""
+                + (byte) ((b >> 7) & 0x1) + (byte) ((b >> 6) & 0x1)
+                + (byte) ((b >> 5) & 0x1) + (byte) ((b >> 4) & 0x1)
+                + (byte) ((b >> 3) & 0x1) + (byte) ((b >> 2) & 0x1)
+                + (byte) ((b >> 1) & 0x1) + (byte) ((b >> 0) & 0x1);
+    }
+
+    public static void main(String[] args) {
+        Long b = 10L;
+        System.out.println(0x1);
+        System.out.println(StringUtils.leftPad(Long.toBinaryString(b),32,"0"));
+    }
 
 }
